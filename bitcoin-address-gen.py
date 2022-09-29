@@ -6,11 +6,12 @@ import base58
 Private_key = base58.b58decode_check("5JYJWrRd7sbqEzL9KR9dYTGrxyLqZEhPtnCtcvhC5t8ZvWgS9iC") 
 Private_key = Private_key[1:]
 
-# Private key to public key (ecdsa transformation)
+# Private key to public key (ecdsa transformation) Elliptic Curve Digital Signature Algorithm used to generate public key from private key.
 signing_key = ecdsa.SigningKey.from_string(Private_key, curve = ecdsa.SECP256k1)
 verifying_key = signing_key.get_verifying_key()
 public_key = bytes.fromhex("04") + verifying_key.to_string()
 
+# Public key to Address: Several layers of hasing is applied.
 # hash sha 256 of pubkey
 sha256_1 = hashlib.sha256(public_key)
 
